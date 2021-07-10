@@ -15,5 +15,7 @@ npm run serve
 npm run build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Component InutMask 
+
+получить знаяение поля input можно повесив на компонент v-model
+Передать тип желаемой  маски можно через атрибут type
