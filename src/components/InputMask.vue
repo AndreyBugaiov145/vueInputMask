@@ -37,7 +37,8 @@
                 j: 0,
                 slots: new Set("_"),
                 accept: new RegExp(false || "\\d", "g"),
-                back: false
+                back: false,
+                value: []
             }
         },
         computed: {
@@ -47,17 +48,22 @@
             first() {
                 return [...this.pattern].findIndex(c => this.slots.has(c))
             },
-            error () {
-                return this.masks[this.type]  ? false : true
+            error() {
+                return this.masks[this.type] ? false : true
             }
         },
         methods: {
-            clean(input) {
+            clean(input,el=null) {
                 input = input.match(this.accept) || [];
+                input[0]? this.value = [...input] : false
+                this.value.length = this.prev.length -1
                 return Array.from(this.pattern, c => {
-                        return input[0] === c || this.slots.has(c) ? input.shift() || c : c
+                    if (input[0] === c || this.slots.has(c)) {
+                        return input.shift() || c
+                    } else {
+                        return c
                     }
-                );
+                });
             },
             format(el) {
                 const [i] = [el.target.selectionStart].map(i => {
@@ -73,10 +79,11 @@
                     this.inputText = null
                 }
                 this.back = false;
-                this.$emit('input', this.inputText)
+                this.$emit('input', this.value.join(''))
             },
             isBackspace(e) {
                 this.back = e.key === "Backspace"
+                this.value.shift()
             },
         },
         mounted() {
