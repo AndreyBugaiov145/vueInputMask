@@ -6,14 +6,14 @@
 </template>
 
 <script>
-
     import InputMask from '@/components/InputMask.vue'
 
     export default {
         name: 'App',
         components: {
             InputMask
-        }, data() {
+        },
+        data() {
             return {
                 text: ''
             }
